@@ -1,0 +1,221 @@
+<div class="container">
+    <div class="card text-center">
+
+        <div class="card-header myCardHeader">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="text-left text-primary font-weight-bold">Product Management </h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button class="btn btn-success" id="btnThem" data-toggle="modal" data-target="#myModal"><i
+                            class="fa fa-plus"></i> Add Product</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tên sản phẩm" id="searchName">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover myTable">
+                <thead class="text-primary">
+                    <tr>
+                        <th class="nowrap">
+                            <span class="mr-1">ID</span>
+                        </th>
+                        <th>Product name</th>
+                        <th>Price</th>
+                        <!-- <th>Image</th> -->
+                        <th>Tags</th>
+                        <th>Rating</th>
+                        <th><em class="fa fa-cog"></em></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <ng-container *ngFor="let item of userList">
+                        <app-user-item [user]="item">
+                        </app-user-item>
+                    </ng-container> -->
+                    <tr *ngFor="let item of productList">
+                        <td>{{item.product_id}}</td>
+                        <td>{{item.product_name}}</td>
+                        <td>{{item.product_price}}</td>
+                        <td>{{item.tag}}</td>
+                        <!-- <img class="smallImage" [src]="item.product_image" alt="item.title"> -->
+                        <td>{{item.rating}}</td>
+                        <td>
+                            <div class="row">
+                                
+                            </div>
+                            <button class="btn btn-info mr-1 " data-toggle="modal" (click)="EditProduct(item)"
+                                    data-target="#myModal1"><i class="fa fa-cog"></i></button>
+                                <button class="btn btn-danger" (click)="DeleteProduct(item)"><i
+                                        class="fa fa-times"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-footer myCardFooter">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <ng-container *ngFor="let item of totalPage">
+                        <li><button class="btn mr-1"
+                                [ngClass]="{'btn-secondary':item!==currentPage,'btn-info':item===currentPage}"
+                                (click)="getAllProduct(item)">{{item}}</button></li>
+                    </ng-container>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <header class="head-form mb-0">
+                    <h2>Add Product</h2>
+                </header>
+
+                <!-- Modal Header -->
+                <!-- 	<div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form #formSignUp="ngForm">
+
+
+                        <input placeholder="ProductName" type="text" name="productName" required #productName="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productName?.errors?.required && (productName.dirty || productName.touched)">
+                            Vui lòng nhập tên sản phẩm </p>
+
+
+                        <input placeholder="Price" type="number" #productPrice="ngModel" required name="productPrice"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productPrice?.errors?.required &&  (productPrice.dirty || productPrice.touched)">
+                            Vui lòng nhập giá sản phẩm </p>
+
+                        <input type="text" name="productImage" #productImage="ngModel" required ngModel
+                            placeholder="Image" />
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productImage?.errors?.required && (productImage.dirty || productImage.touched)">
+                            Vui lòng nhập link hình ảnh </p>
+
+                        <textarea placeholder="Description" name="description" rows="10" cols="30"
+                            #description="ngModel" required ngModel>Description</textarea>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="description?.errors?.required && (description.dirty || description.touched)">
+                            Vui lòng nhập mô tả sản phẩm </p>
+
+
+                        <select class="form-control" name="categoryId" ngModel>
+                            <option *ngFor="let item of categoriesList" value={{item.id}}>{{item.category_name}}
+                            </option>
+
+                        </select>
+
+
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="modal-footer">
+                    <button id="btnThemNV" type="submit" (click)="_handleOnSubmitAddForm(formSignUp)"
+                        class="btn btn-success">Add Product</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- form edit -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <header class="head-form mb-0">
+                    <h2>Edit Product</h2>
+                </header>
+
+                <!-- Modal Header -->
+                <!-- 	<div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form #formEdit="ngForm">
+                        <input placeholder="ProductName" type="text" name="productName" required #productName="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productName?.errors?.required && (productName.dirty || productName.touched)">
+                            Vui lòng nhập tên sản phẩm </p>
+
+
+                        <input placeholder="Price" type="number" #productPrice="ngModel" required name="productPrice"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productPrice?.errors?.required &&  (productPrice.dirty || productPrice.touched)">
+                            Vui lòng nhập giá sản phẩm </p>
+
+                        <input type="text" name="productImage" #productImage="ngModel" required ngModel
+                            placeholder="Image" />
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productImage?.errors?.required && (productImage.dirty || productImage.touched)">
+                            Vui lòng nhập link hình ảnh </p>
+
+                        <textarea placeholder="Description" name="description" rows="10" cols="30"
+                            #description="ngModel" required ngModel>Description</textarea>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="description?.errors?.required && (description.dirty || description.touched)">
+                            Vui lòng nhập mô tả sản phẩm </p>
+
+
+                        <select class="form-control" name="categoryId" ngModel>
+                            <option *ngFor="let item of categoriesList" value={{item.id}}>{{item.category_name}}
+                            </option>
+
+                        </select>
+
+
+
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="modal-footer">
+
+                    <button type="button" (click)="_handleOnSubmitEditForm(formEdit)"
+                        class="btn btn-success">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,174 @@
+<div class="container">
+    <div class="card text-center">
+
+        <div class="card-header myCardHeader">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="text-left text-primary font-weight-bold">Advertisement Management </h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button class="btn btn-success" id="btnThem" data-toggle="modal" data-target="#myModal"
+                        (click)="AddUser()"><i class="fa fa-plus"></i> Add Ads</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control search" placeholder="Tên quảng cáo" id="searchName">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover myTable">
+                <thead class="text-primary">
+                    <tr>
+                        <th class="nowrap">
+                            <span class="mr-1">ID</span>
+
+                        </th>
+                        <th>Name</th>
+
+                        <th>Image</th>
+
+                        <th><em class="fa fa-cog"></em></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <ng-container *ngFor="let item of userList">
+                        <app-user-item [user]="item">
+                        </app-user-item>
+                    </ng-container> -->
+                    <tr *ngFor="let item of adsList">
+                        <td>
+                            {{item.id}}
+                        </td>
+                        <td>
+                            {{item.title}}
+                        </td>
+
+                        <img class="smallImage" [src]="item.image" alt="item.title">
+                        <td>
+                            <button class="btn btn-info mr-1" data-toggle="modal" (click)="EditAds(item)"
+                                data-target="#myModal1"><i class="fa fa-cog"></i></button>
+                            <button class="btn btn-danger" (click)="DeleteAds(item)"><i
+                                    class="fa fa-times"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-footer myCardFooter">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <ng-container *ngFor="let item of totalPage">
+                        <li><button class="btn mr-1"
+                                [ngClass]="{'btn-secondary':item!==currentPage,'btn-info':item===currentPage}"
+                                (click)="getAllAds(item)">{{item}}</button></li>
+                    </ng-container>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <header class="head-form mb-0">
+                    <h2>Add Advertisement </h2>
+                </header>
+
+                <!-- Modal Header -->
+                <!-- 	<div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form #formSignUp="ngForm">
+
+
+                        <input placeholder="Image" type="text" name="image" required #image="ngModel" ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="image?.errors?.required && (image.dirty || image.touched)">
+                            Vui lòng nhập link hình ảnh </p>
+
+
+                        <input placeholder="Title" type="text" #title="ngModel" required name="title" ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="title?.errors?.required &&  (title.dirty || title.touched)">
+                            Vui lòng nhập tiêu đè </p>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="modal-footer">
+                    <button type="submit" (click)="_handleOnSubmitAddForm(formSignUp)" class="btn btn-success">Add
+                        Ads</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- form edit -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <header class="head-form mb-0">
+                    <h2>Edit Advertisement</h2>
+                </header>
+
+                <!-- Modal Header -->
+                <!-- 	<div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form #formEdit="ngForm">
+
+
+                        <input placeholder="Image" type="text" name="image" required #image="ngModel" ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="image?.errors?.required && (image.dirty || image.touched)">
+                            Vui lòng nhập link hình ảnh </p>
+
+
+                        <input placeholder="Title" type="text" #title="ngModel" required name="title" ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="title?.errors?.required &&  (title.dirty || title.touched)">
+                            Vui lòng nhập tiêu đè </p>
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="modal-footer">
+
+                    <button id="btnCapNhat" type="button" (click)="_handleOnSubmitEditForm(formEdit)"
+                        class="btn btn-success">Update</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>

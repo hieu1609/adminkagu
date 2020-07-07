@@ -1,0 +1,86 @@
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header ">
+            <h3 style="text-align:center">Nội thất Kagu</h3>
+            <!-- <strong>BS</strong> -->
+        </div>
+
+        <ul class="list-unstyled components">
+            <li routerLinkActive="active">
+                <a routerLink="/dashboard">
+                    <i class="fa fa-chart-bar"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/users-management"> 
+                    <i class="fa fa-users"></i>
+                    Users
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/product-management">
+                    <i class="fa fa-box"></i>
+                    Product
+                </a>
+            </li>
+            <li class="order" routerLinkActive="active">
+                <a routerLink="/order-management/new">
+                    <i class="fa fa-shopping-cart"></i>
+                    Order
+                </a>
+                <div class="submenuOrder">
+                    <a routerLink="/order-management/new">
+                        <i class="fa fa-sticky-note"></i>
+                        New
+                    </a>
+                    <a routerLink="/order-management/confirmed">
+                        <i class="fa fa-check"></i>
+                        Confirmed
+                    </a>
+                    <a routerLink="/order-management/shipping">
+                        <i class="fa fa-car-side"></i>
+                        Shipping
+                    </a>
+                    <a routerLink="/order-management/completed">
+                        <i class="fa fa-people-carry"></i>
+                        Completed
+                    </a>
+                </div>
+            </li>
+
+            <li class="message" routerLinkActive="active">
+                <a routerLink="/message-management">
+                    <i class="fa fa-envelope"></i>
+                    Messages
+                </a>
+                <div class="submenuOrder">
+                    <a routerLink="/message-management/feedback">
+                        <i class="fa fa-heart"></i>
+                        Feedbacks
+                    </a>
+                    <a routerLink="/message-management/notification">
+                        <i class="fa fa-bell"></i>
+                        Notifications
+                    </a>
+                </div>
+            </li>
+
+            <li routerLinkActive="active">
+                <a routerLink="/advertisement-management">
+                    <i class="fa fa-ad"></i>
+                    Advertisement
+                </a>
+            </li>
+        </ul>
+
+
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

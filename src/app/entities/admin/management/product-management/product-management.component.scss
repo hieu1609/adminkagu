@@ -1,0 +1,95 @@
+img.smallImage {
+  width: 200px;
+  height: 200px;
+}
+.modal {
+  input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px;
+    padding-right: 20px;
+    border-radius: 1px;
+    border: 1px solid #ccc;
+    font-family: "Tomorrow", sans-serif;
+  }
+  textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 5px;
+    padding-right: 20px;
+    border-radius: 1px;
+    border: 1px solid #ccc;
+    font-family: "Tomorrow", sans-serif;
+  }
+  label {
+    padding-left: 5px;
+    font-family: "Tomorrow", sans-serif;
+    font-size: 15px;
+  }
+}
+
+th {
+  text-align: center;
+  line-height: 100%;
+}
+tr button {
+  width: 42px;
+  text-align: center;
+}
+#myModal {
+  header {
+    h2 {
+      font-family: "Solway", serif;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+  }
+}
+#myModal1 {
+  header {
+    h2 {
+      font-family: "Solway", serif;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+  }
+}
+select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px;
+  height: 55px;
+  padding-right: 20px;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+  font-family: "Tomorrow", sans-serif;
+  color: black;
+}
+option {
+  width: 100%;
+  padding: 15px;
+
+  margin-top: 20px;
+  border-radius: 1px;
+  font-size: 15px;
+  font-family: "Tomorrow", sans-serif;
+  color: black;
+}
+.even {
+  background-color: gainsboro;
+}
+h3,
+a,
+th,
+span,
+td,
+input {
+  font-family: "Tomorrow", sans-serif;
+}
+::ng-deep button {
+  font-family: "Solway", serif;
+}
+
+.text-primary{
+  color: #3cbba4 !important;
+}
