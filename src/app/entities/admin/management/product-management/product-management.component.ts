@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-product-management",
   templateUrl: "./product-management.component.html",
-  styleUrls: ["./product-management.component.scss"]
+  styleUrls: ["./product-management.component.scss"],
 })
 export class ProductManagementComponent implements OnInit {
   @ViewChild("formSignUp", { static: false }) formSignUp: NgForm;
@@ -22,26 +22,25 @@ export class ProductManagementComponent implements OnInit {
   editflag: boolean = false;
   ngOnInit() {
     this.getAllProduct(1);
-    // this.getAllCategories();
+    this.getAllCategories();
   }
 
-  // getAllCategories() {
-  //   const uri = `admin/get-product-admin`;
-
-  //   this._dataService.get(uri).subscribe(
-  //     (data: any) => {
-  //       this.categoriesList = data.data;
-  //       console.log(this.productList);
-  //     },
-  //     (err: any) => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
+  getAllCategories() {
+    const uri = `data/get-product-category`;
+    this._dataService.get(uri).subscribe(
+      (data: any) => {
+        this.categoriesList = data.data;
+        console.log(this.productList);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
   getAllProduct(page) {
     const uri = `admin/get-product-admin`;
     let message = {
-      page
+      page,
     };
     this.currentPage = page;
     console.log(this.currentPage);
@@ -68,26 +67,32 @@ export class ProductManagementComponent implements OnInit {
     );
   }
   DeleteProduct(item) {
-    const uri = `admin/product/${item.id}`;
+    const uri = `admin/product/${item.product_id}`;
     this._dataService.delete(uri).subscribe(
       (data: any) => {
         this.getAllProduct(this.currentPage);
       },
       (err: any) => {
-        alert(err.error.errors[0].errorMessage);
+        //alert(err.error.errors[0].errorMessage);
+        console.log(err);
       }
     );
   }
   EditProduct(item) {
     console.log(item);
     this.editflag = true;
-    this.idProductEdit = item.id;
+    this.idProductEdit = item.product_id;
     this.formEdit.setValue({
       productName: item.product_name,
-      productPrice: item.price,
-      productImage: item.product_image,
-      description: item.description,
-      categoryId: item.category_id
+      productFkPrice: item.product_fk_price,
+      productPrice: item.product_price,
+      productMaterial: item.material,
+      productSize: item.size,
+      productColor: item.color,
+      tag: item.tag,
+      infor: item.infor,
+      categoryId: item.cat_id,
+      rating: item.rating,
     });
     this.editflag = true;
     console.log(this.formEdit.value);
@@ -107,7 +112,7 @@ export class ProductManagementComponent implements OnInit {
   }
   _handleOnSubmitAddForm() {
     console.log(this.formSignUp.value);
-    const uri = "admin/addProduct";
+    const uri = "admin/add-product";
     this._dataService.post(uri, this.formSignUp.value).subscribe(
       (data: any) => {
         this.getAllProduct(this.currentPage);

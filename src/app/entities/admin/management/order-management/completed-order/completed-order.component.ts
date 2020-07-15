@@ -6,13 +6,12 @@ import { NgForm } from "@angular/forms";
 @Component({
   selector: "app-completed-order",
   templateUrl: "./completed-order.component.html",
-  styleUrls: ["./completed-order.component.scss"]
+  styleUrls: ["./completed-order.component.scss"],
 })
 export class CompletedOrderComponent implements OnInit {
   @ViewChild("formSignUp", { static: false }) formSignUp: NgForm;
   @ViewChild("formEdit", { static: false }) formEdit: NgForm;
   constructor(private _dataService: DataService, private router: Router) {}
-
   ordertList: any = [];
   productsList: any = [];
   idProductEdit;
@@ -22,18 +21,12 @@ export class CompletedOrderComponent implements OnInit {
   times = 1;
   editflag: boolean = false;
   editOrderObj: any = {
-    id: 0,
     orderId: 0,
     productId: 0,
-    productNumber: 0,
-    confirm: false,
-    shipping: false,
-    success: false,
-    name: "",
-    phone: "",
-    address: "",
-    email: "",
-    userId: null
+    productName: "string",
+    productPrice: 0,
+    quantity: 0,
+    status: "string",
   };
   ngOnInit() {
     this.getAllOrder(1);
@@ -64,9 +57,9 @@ export class CompletedOrderComponent implements OnInit {
     );
   }
   getAllOrder(page) {
-    const uri = `admin/getPurchasesCompletedAdmin`;
+    const uri = `admin/get-complete-order-admin`;
     let message = {
-      page
+      page,
     };
     this.currentPage = page;
 
@@ -92,7 +85,7 @@ export class CompletedOrderComponent implements OnInit {
   }
   DeleteOrder(id) {
     console.log(id);
-    const uri = `admin/productr/${id}`;
+    const uri = `admin/product/${id}`;
     // const uri = `admin/order/${id}`;
     this._dataService.delete(uri).subscribe(
       (data: any) => {
@@ -105,52 +98,44 @@ export class CompletedOrderComponent implements OnInit {
   }
   EditProduct(item) {
     console.log(item);
-
-    this.orderID = item.order_id;
+    this.editflag = true;
     this.idProductEdit = item.id;
-
+    this.orderID = item.order_id;
     this.formEdit.setValue({
-      name: item.name,
-      phone: item.phone,
-      email: item.email,
-      address: item.address,
-      product_name: item.product_name,
-      productNumber: item.product_number,
-      price: item.product_price
+      productId: item.product_id,
+      productName: item.product_name,
+      productPrice: item.product_price,
+      quantity: item.quantity,
+      status: item.status,
     });
     this.editflag = true;
     console.log(this.formEdit.value);
-
-    this.editOrderObj.id = item.id;
-    this.editOrderObj.orderId = item.order_id;
-    this.editOrderObj.productId = item.product_id;
-    this.editOrderObj.userId = item.user;
   }
 
   _handleOnSubmitEditForm() {
     console.log(this.formEdit.value);
-    this.editOrderObj.productNumber = this.formEdit.value.productNumber;
-    if (this.formEdit.value.types === 0) {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = false;
-      this.editOrderObj.success = false;
-    } else if (this.formEdit.value.types === "1") {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = true;
-      this.editOrderObj.success = false;
-    } else {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = true;
-      this.editOrderObj.success = true;
-    }
+    this.editOrderObj.orderId = this.orderID;
+    this.editOrderObj.productId = this.formEdit.value.productId;
+    this.editOrderObj.productName = this.formEdit.value.productName;
+    this.editOrderObj.productPrice = this.formEdit.value.productPrice;
+    this.editOrderObj.quantity = this.formEdit.value.quantity;
 
-    this.editOrderObj.name = this.formEdit.value.name;
-    this.editOrderObj.phone = this.formEdit.value.phone;
-    this.editOrderObj.address = this.formEdit.value.address;
-    this.editOrderObj.email = this.formEdit.value.email;
+    if (
+      this.formEdit.value.status === 0 ||
+      this.formEdit.value.status === "0"
+    ) {
+      this.editOrderObj.status = "new";
+    } else if (
+      this.formEdit.value.status === "1" ||
+      this.formEdit.value.status === 1
+    ) {
+      this.editOrderObj.status = "shipping";
+    } else {
+      this.editOrderObj.status = "complete";
+    }
     console.log(this.editOrderObj);
 
-    const uri = `admin/order/editPurchasesAdmin`;
+    const uri = `admin/order/${this.idProductEdit}`;
 
     this._dataService.put(uri, this.editOrderObj).subscribe(
       (data: any) => {

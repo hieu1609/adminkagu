@@ -8,12 +8,11 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <button class="btn btn-success" id="btnThem" data-toggle="modal" data-target="#myModal"><i
-                            class="fa fa-plus"></i> Add Product</button>
-
+                            class="fa fa-plus"></i> Add Product
+                    </button>
                 </div>
             </div>
         </div>
-
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col">
@@ -106,32 +105,53 @@
                         <p class="alert alert-danger mt-2"
                             *ngIf="productName?.errors?.required && (productName.dirty || productName.touched)">
                             Vui lòng nhập tên sản phẩm </p>
-
+                        <input placeholder="ProductFkPrice" type="text" name="productFkPrice" required #productFkPrice="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productFkPrice?.errors?.required && (productFkPrice.dirty || productFkPrice.touched)">
+                            Vui lòng nhập giá cũ sản phẩm </p>
 
                         <input placeholder="Price" type="number" #productPrice="ngModel" required name="productPrice"
                             ngModel>
                         <p class="alert alert-danger mt-2"
                             *ngIf="productPrice?.errors?.required &&  (productPrice.dirty || productPrice.touched)">
                             Vui lòng nhập giá sản phẩm </p>
-
-                        <input type="text" name="productImage" #productImage="ngModel" required ngModel
-                            placeholder="Image" />
+                        <input placeholder="ProductMaterial" type="text" name="productMaterial" required #productMaterial="ngModel"
+                            ngModel>
                         <p class="alert alert-danger mt-2"
-                            *ngIf="productImage?.errors?.required && (productImage.dirty || productImage.touched)">
-                            Vui lòng nhập link hình ảnh </p>
-
-                        <textarea placeholder="Description" name="description" rows="10" cols="30"
-                            #description="ngModel" required ngModel>Description</textarea>
+                            *ngIf="productMaterial?.errors?.required && (productMaterial.dirty || productMaterial.touched)">
+                            Vui lòng nhập chất liệu sản phẩm </p>
+                        <input placeholder="ProductSize" type="text" name="productSize" required #productSize="ngModel"
+                            ngModel>
                         <p class="alert alert-danger mt-2"
-                            *ngIf="description?.errors?.required && (description.dirty || description.touched)">
-                            Vui lòng nhập mô tả sản phẩm </p>
-
-
+                            *ngIf="productSize?.errors?.required && (productSize.dirty || productSize.touched)">
+                            Vui lòng nhập kích thước sản phẩm </p>
+                        <input placeholder="ProductColor" type="text" name="productColor" required #productColor="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productColor?.errors?.required && (productColor.dirty || productColor.touched)">
+                            Vui lòng nhập màu sản phẩm </p>
+                        <input placeholder="Tag" type="text" name="tag" required #tag="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="tag?.errors?.required && (tag.dirty || tag.touched)">
+                            Vui lòng nhập từ khoá cho sản phẩm </p>
+                        
+                        <textarea placeholder="Information" name="infor" rows="10" cols="30"
+                            #infor="ngModel" required ngModel>Information</textarea>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="infor?.errors?.required && (infor.dirty || infor.touched)">
+                            Vui lòng nhập thông tin sản phẩm </p>
                         <select class="form-control" name="categoryId" ngModel>
-                            <option *ngFor="let item of categoriesList" value={{item.id}}>{{item.category_name}}
+                            <option *ngFor="let item of categoriesList" value={{item.cat_id}}>{{item.cat_name}}
                             </option>
 
                         </select>
+                        <input placeholder="Rating" type="text" name="rating" required #rating="ngModel"
+                        ngModel>
+                        <p class="alert alert-danger mt-2"
+                        *ngIf="rating?.errors?.required && (rating.dirty || rating.touched)">
+                        Vui lòng nhập rating sản phẩm </p>
 
 
                     </form>
@@ -170,40 +190,58 @@
                 <div class="modal-body">
 
                     <form #formEdit="ngForm">
+                        
+                        
                         <input placeholder="ProductName" type="text" name="productName" required #productName="ngModel"
                             ngModel>
                         <p class="alert alert-danger mt-2"
                             *ngIf="productName?.errors?.required && (productName.dirty || productName.touched)">
                             Vui lòng nhập tên sản phẩm </p>
-
+                        <input placeholder="ProductFkPrice" type="text" name="productFkPrice" required #productFkPrice="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productFkPrice?.errors?.required && (productFkPrice.dirty || productFkPrice.touched)">
+                            Vui lòng nhập giá cũ sản phẩm </p>
 
                         <input placeholder="Price" type="number" #productPrice="ngModel" required name="productPrice"
                             ngModel>
                         <p class="alert alert-danger mt-2"
                             *ngIf="productPrice?.errors?.required &&  (productPrice.dirty || productPrice.touched)">
                             Vui lòng nhập giá sản phẩm </p>
-
-                        <input type="text" name="productImage" #productImage="ngModel" required ngModel
-                            placeholder="Image" />
+                        <input placeholder="ProductMaterial" type="text" name="productMaterial" required #productMaterial="ngModel"
+                            ngModel>
                         <p class="alert alert-danger mt-2"
-                            *ngIf="productImage?.errors?.required && (productImage.dirty || productImage.touched)">
-                            Vui lòng nhập link hình ảnh </p>
-
-                        <textarea placeholder="Description" name="description" rows="10" cols="30"
-                            #description="ngModel" required ngModel>Description</textarea>
+                            *ngIf="productMaterial?.errors?.required && (productMaterial.dirty || productMaterial.touched)">
+                            Vui lòng nhập chất liệu sản phẩm </p>
+                        <input placeholder="ProductSize" type="text" name="productSize" required #productSize="ngModel"
+                            ngModel>
                         <p class="alert alert-danger mt-2"
-                            *ngIf="description?.errors?.required && (description.dirty || description.touched)">
-                            Vui lòng nhập mô tả sản phẩm </p>
-
-
+                            *ngIf="productSize?.errors?.required && (productSize.dirty || productSize.touched)">
+                            Vui lòng nhập kích thước sản phẩm </p>
+                        <input placeholder="ProductColor" type="text" name="productColor" required #productColor="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="productColor?.errors?.required && (productColor.dirty || productColor.touched)">
+                            Vui lòng nhập màu sản phẩm </p>
+                        <input placeholder="Tag" type="text" name="tag" required #tag="ngModel"
+                            ngModel>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="tag?.errors?.required && (tag.dirty || tag.touched)">
+                            Vui lòng nhập từ khoá cho sản phẩm </p>
                         <select class="form-control" name="categoryId" ngModel>
-                            <option *ngFor="let item of categoriesList" value={{item.id}}>{{item.category_name}}
+                            <option *ngFor="let item of categoriesList" value={{item.cat_id}}>{{item.cat_name}}
                             </option>
-
                         </select>
-
-
-
+                        <input placeholder="Rating" type="text" name="rating" required #rating="ngModel"
+                        ngModel>
+                        <p class="alert alert-danger mt-2"
+                        *ngIf="rating?.errors?.required && (rating.dirty || rating.touched)">
+                        Vui lòng nhập rating sản phẩm </p>
+                        <textarea placeholder="Information" name="infor" rows="10" cols="30"
+                            #infor="ngModel" required ngModel>Information</textarea>
+                        <p class="alert alert-danger mt-2"
+                            *ngIf="infor?.errors?.required && (infor.dirty || infor.touched)">
+                            Vui lòng nhập thông tin sản phẩm </p>
                     </form>
 
                 </div>
