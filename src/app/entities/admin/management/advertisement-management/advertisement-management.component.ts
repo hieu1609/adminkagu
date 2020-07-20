@@ -6,7 +6,7 @@ import { NgForm } from "@angular/forms";
 @Component({
   selector: "app-advertisement-management",
   templateUrl: "./advertisement-management.component.html",
-  styleUrls: ["./advertisement-management.component.scss"]
+  styleUrls: ["./advertisement-management.component.scss"],
 })
 export class AdvertisementManagementComponent implements OnInit {
   constructor(private _dataService: DataService, private router: Router) {}
@@ -21,9 +21,9 @@ export class AdvertisementManagementComponent implements OnInit {
   }
   getAllAds(page) {
     this.currentPage = page;
-    const uri = `admin/get-slide-show-a dmin`;
+    const uri = `admin/get-slide-show-admin`;
     let message = {
-      page
+      page,
     };
     this._dataService.post(uri, message).subscribe(
       (data: any) => {
@@ -52,7 +52,7 @@ export class AdvertisementManagementComponent implements OnInit {
     this.idAdsEdit = item.id;
     this.formEdit.setValue({
       title: item.title,
-      image: item.image
+      image: item.image,
     });
 
     console.log(this.formEdit.value);
