@@ -129,7 +129,7 @@ export class NewOrderComponent implements OnInit {
     ) {
       this.editOrderObj.status = "shipping";
     } else {
-      this.editOrderObj.status = "complete";
+      this.editOrderObj.status = "finished";
     }
     console.log(this.editOrderObj);
 

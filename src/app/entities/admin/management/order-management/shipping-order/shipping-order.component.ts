@@ -127,14 +127,14 @@ export class ShippingOrderComponent implements OnInit {
       this.formEdit.value.status === 0 ||
       this.formEdit.value.status === "0"
     ) {
-      this.editOrderObj.status = "new";
+      this.editOrderObj.status = "none";
     } else if (
       this.formEdit.value.status === "1" ||
       this.formEdit.value.status === 1
     ) {
       this.editOrderObj.status = "confirmed";
     } else {
-      this.editOrderObj.status = "complete";
+      this.editOrderObj.status = "finished";
     }
     console.log(this.editOrderObj);
 
