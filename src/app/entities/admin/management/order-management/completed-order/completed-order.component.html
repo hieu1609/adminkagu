@@ -1,109 +1,160 @@
 <div class="container">
-    <div class="card text-center">
-
-        <div class="card-header myCardHeader">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="text-left text-primary font-weight-bold">Orders Completed </h3>
-                </div>
-            </div>
+  <div class="card text-center">
+    <div class="card-header myCardHeader">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="text-left text-primary font-weight-bold">
+            Orders Completed
+          </h3>
         </div>
-
-        <div class="card-body">
-            <table class="table table-bordered table-hover myTable">
-                <thead class="text-primary">
-                    <tr>
-                        <th class="nowrap">
-                            <span class="mr-1">Order_ID</span>
-                        </th>
-                        <th>Product name</th>
-                        <th>Quantity</th>
-                        <th>TotalPrice</th>
-                        <th>Customer</th>
-                        <th>Phone</th>
-
-                        <th><em class="fa fa-cog"></em></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of ordertList " [ngClass]="{'even':item.order_id %2 ===0}">
-                        <td>{{item.order_id}}</td>
-                        <td>{{item.product_name}}</td>
-                        <td> {{item.product_number}} </td>
-                        <td>{{item.product_price}}</td>
-
-                        <td>{{item.name}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>
-                            <button class="btn btn-info mr-1 " data-toggle="modal" (click)="EditProduct(item)"
-                                data-target="#myModal1"><i class="fa fa-info"></i></button>
-                            <button class="btn btn-danger" (click)="DeleteOrder(item.id)"><i
-                                    class="fa fa-times"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-        <div class="card-footer myCardFooter">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <ng-container *ngFor="let item of totalPage">
-                        <li><button class="btn mr-1"
-                                [ngClass]="{'btn-secondary':item!==currentPage,'btn-info':item===currentPage}"
-                                (click)="getAllOrder(item)">{{item}}</button></li>
-                    </ng-container>
-                </ul>
-            </nav>
-        </div>
+      </div>
     </div>
 
+    <div class="card-body">
+      <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+          <tr>
+            <th class="nowrap">
+              <span class="mr-1">Order_ID</span>
+            </th>
+            <th>Product name</th>
+            <th>Quantity</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>TotalPrice</th>
+            <th><em class="fa fa-cog"></em></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of ordertList"
+            [ngClass]="{ even: item.order_id % 2 === 0 }"
+          >
+            <td>{{ item.order_id }}</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.total_price }}</td>
+            <td>
+              <button
+                class="btn btn-info mr-1"
+                data-toggle="modal"
+                (click)="EditProduct(item)"
+                data-target="#myModal1"
+              >
+                <i class="fa fa-info"></i>
+              </button>
+              <!-- <button
+                class="btn btn-danger"
+                (click)="DeleteOrder(item.order_id)"
+              >
+                <i class="fa fa-times"></i>
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- form edit -->
-    <!-- The Modal -->
-    <div class="modal fade" id="myModal1">
-        <div class="modal-dialog">
-            <div class="modal-content">
+    <div class="card-footer myCardFooter">
+      <nav>
+        <ul class="pagination justify-content-center">
+          <ng-container *ngFor="let item of totalPage">
+            <li>
+              <button
+                class="btn mr-1"
+                [ngClass]="{
+                  'btn-secondary': item !== currentPage,
+                  'btn-info': item === currentPage
+                }"
+                (click)="getAllOrder(item)"
+              >
+                {{ item }}
+              </button>
+            </li>
+          </ng-container>
+        </ul>
+      </nav>
+    </div>
+  </div>
 
-                <header class="head-form mb-0">
-                    <h2>Order Detail #{{orderID}}</h2>
-                </header>
+  <!-- form edit -->
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <header class="head-form mb-0">
+          <h2>Order Detail #{{ orderID }}</h2>
+        </header>
 
-                <!-- Modal Header -->
-                <!-- 	<div class="modal-header">
+        <!-- Modal Header -->
+        <!-- 	<div class="modal-header">
                                     <h4 class="modal-title" id="modal-title">Modal Heading</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div> -->
 
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form #formEdit="ngForm">
-                        <input placeholder="Customer's Name" readonly type="text" name="name" required #name="ngModel"
-                            ngModel>
-                        <input placeholder=" Customer's Phone" readonly type="text" #phone="ngModel" required
-                            name="phone" ngModel>
-                        <input placeholder=" Customer's Address" readonly type="text" #address="ngModel" required
-                            name="address" ngModel>
-                        <input placeholder="Email" readonly type="email" name="email" required #email="ngModel"
-                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" ngModel>
-                        <input placeholder="Product Name" readonly type="texy" name="product_name" required
-                            #product_name="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" ngModel>
-
-                        <input placeholder=" Quantity" readonly type="text" #productNumber="ngModel" required
-                            name="productNumber" ngModel>
-                        <input placeholder=" Product Number" readonly type="text" #price="ngModel" required name="price"
-                            ngModel>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer" id="modal-footer">
-
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form #formEdit="ngForm">
+            <input
+              readonly
+              placeholder=" Product ID"
+              type="text"
+              #productId="ngModel"
+              required
+              name="productId"
+              ngModel
+            />
+            <input
+              readonly
+              placeholder="Product Name"
+              type="text"
+              name="productName"
+              required
+              #productName="ngModel"
+              ngModel
+            />
+            <input
+              readonly
+              placeholder=" Product Price"
+              type="text"
+              #quantity="ngModel"
+              required
+              name="productPrice"
+              ngModel
+            />
+            <input
+              readonly
+              placeholder=" Quantity"
+              type="text"
+              #quantity="ngModel"
+              required
+              name="quantity"
+              ngModel
+            />
+            <p
+              class="alert alert-danger mt-2"
+              *ngIf="
+                quantity?.errors?.required &&
+                (quantity.dirty || quantity.touched)
+              "
+            >
+              Vui lòng nhập số lượng
+            </p>
+            <select class="form-control" name="status" ngModel>
+              <option value="completed">Completed </option>
+            </select>
+          </form>
         </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer" id="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>

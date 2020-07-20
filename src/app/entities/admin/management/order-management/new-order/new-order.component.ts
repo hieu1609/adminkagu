@@ -6,7 +6,7 @@ import { NgForm } from "@angular/forms";
 @Component({
   selector: "app-new-order",
   templateUrl: "./new-order.component.html",
-  styleUrls: ["./new-order.component.scss"]
+  styleUrls: ["./new-order.component.scss"],
 })
 export class NewOrderComponent implements OnInit {
   @ViewChild("formSignUp", { static: false }) formSignUp: NgForm;
@@ -22,18 +22,12 @@ export class NewOrderComponent implements OnInit {
   editflag: boolean = false;
   orderID;
   editOrderObj: any = {
-    id: 0,
     orderId: 0,
     productId: 0,
-    productNumber: 0,
-    confirm: false,
-    shipping: false,
-    success: false,
-    name: "",
-    phone: "",
-    address: "",
-    email: "",
-    userId: null
+    productName: "string",
+    productPrice: 0,
+    quantity: 0,
+    status: "string",
   };
   ngOnInit() {
     this.getAllOrder(1);
@@ -63,9 +57,9 @@ export class NewOrderComponent implements OnInit {
     );
   }
   getAllOrder(page) {
-    const uri = `admin/getPurchasesReceivedAdmin`;
+    const uri = `admin/get-new-order-admin`;
     let message = {
-      page
+      page,
     };
     this.currentPage = page;
 
@@ -105,69 +99,45 @@ export class NewOrderComponent implements OnInit {
     this.editflag = true;
     this.idProductEdit = item.id;
     this.orderID = item.order_id;
-
     this.formEdit.setValue({
-      name: item.name,
-      phone: item.phone,
-      email: item.email,
-      address: item.address,
       productId: item.product_id,
-      productNumber: item.product_number,
-      types: item.confirm
+      productName: item.product_name,
+      productPrice: item.product_price,
+      quantity: item.quantity,
+      status: item.status,
     });
     this.editflag = true;
     console.log(this.formEdit.value);
-
-    this.editOrderObj.id = item.id;
-    this.editOrderObj.orderId = item.order_id;
-    this.editOrderObj.productId = item.product_id;
-    this.editOrderObj.userId = item.user;
   }
 
   _handleOnSubmitEditForm() {
     console.log(this.formEdit.value);
-    this.editOrderObj.productNumber = this.formEdit.value.productNumber;
-    if (this.formEdit.value.types === 0 || this.formEdit.value.types === "0") {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = false;
-      this.editOrderObj.success = false;
-    } else if (
-      this.formEdit.value.types === "1" ||
-      this.formEdit.value.types === 1
-    ) {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = true;
-      this.editOrderObj.success = false;
-    } else {
-      this.editOrderObj.confirm = true;
-      this.editOrderObj.shipping = true;
-      this.editOrderObj.success = true;
-    }
+    this.editOrderObj.orderId = this.orderID;
+    this.editOrderObj.productId = this.formEdit.value.productId;
+    this.editOrderObj.productName = this.formEdit.value.productName;
+    this.editOrderObj.productPrice = this.formEdit.value.productPrice;
+    this.editOrderObj.quantity = this.formEdit.value.quantity;
 
-    this.editOrderObj.name = this.formEdit.value.name;
-    this.editOrderObj.phone = this.formEdit.value.phone;
-    this.editOrderObj.address = this.formEdit.value.address;
-    this.editOrderObj.email = this.formEdit.value.email;
+    if (
+      this.formEdit.value.status === 0 ||
+      this.formEdit.value.status === "0"
+    ) {
+      this.editOrderObj.status = "confirmed";
+    } else if (
+      this.formEdit.value.status === "1" ||
+      this.formEdit.value.status === 1
+    ) {
+      this.editOrderObj.status = "shipping";
+    } else {
+      this.editOrderObj.status = "finished";
+    }
     console.log(this.editOrderObj);
 
-    const uri = `admin/order/editPurchasesAdmin`;
+    const uri = `admin/order/${this.idProductEdit}`;
 
     this._dataService.put(uri, this.editOrderObj).subscribe(
       (data: any) => {
         this.getAllOrder(this.currentPage);
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-  }
-  _handleOnSubmitAddForm() {
-    console.log(this.formSignUp.value);
-    const uri = "admin/addProduct";
-    this._dataService.post(uri, this.formSignUp.value).subscribe(
-      (data: any) => {
-        this.getAllOrder(this.currentPage);
-        this.formSignUp.resetForm();
       },
       (err: any) => {
         console.log(err);
