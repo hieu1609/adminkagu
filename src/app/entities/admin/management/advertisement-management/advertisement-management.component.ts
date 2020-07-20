@@ -21,7 +21,7 @@ export class AdvertisementManagementComponent implements OnInit {
   }
   getAllAds(page) {
     this.currentPage = page;
-    const uri = `admin/get-slide-show-a dmin`;
+    const uri = `admin/get-slide-show-admin`;
     let message = {
       page
     };
